@@ -9,11 +9,11 @@ Requirements:
 */ 
 
 // ball variables
-int ellipse_x_position = 100;
-int ellipse_y_position = 200;
+int ellipse_x_position = 300;
+int ellipse_y_position = 300;
 int ellipse_radius = 50;
-int x_speed = 5;
-int y_speed = -5;
+int x_speed = 10;
+int y_speed = -10;
 
 // Paddle variables
 int rect_x_position = 10; // initial x position of Paddle
@@ -34,31 +34,37 @@ void draw(){
   ellipse_x_position += x_speed;
   ellipse_y_position += y_speed;
   
-  // if ball hits paddle
+  
+  // check ellipse collisions
   if (collide_paddle()){
   y_speed *= -1;
-  }
-  // check ellipse collisions
+    }
   if (collide_right_wall(ellipse_x_position, ellipse_radius)){
     x_speed *= -1;
-  }
-  if (collide_left_wall(ellipse_x_position, ellipse_radius)){
+    }
+  if (collide_left_wall(ellipse_x_position)){
     x_speed *= -1;
-  }
-  
+    }
   if (collide_top(ellipse_y_position, ellipse_radius)){
     y_speed *= -1;
-  }
-  
+    }
   if (collide_bottom(ellipse_y_position, ellipse_radius)){
     exit();
   }
   
+  // Paddle Collisions
+  if(collide_right_wall(rect_x_position, rect_length)){
+   rect_x_position -= rect_step;
+    }
+  if(collide_left_wall(rect_x_position)){
+   rect_x_position += rect_step;
+    }
 }
 
 void keyPressed(){
   if (keyCode == RIGHT){
   rect_x_position += rect_step;
+  
   }
   
   if (keyCode == LEFT){
@@ -72,9 +78,12 @@ void keyPressed(){
 /**Checks if ball has collided with the paddle*/
 boolean collide_paddle(){
   if( 
-  (((ellipse_x_position + ellipse_radius) >= rect_x_position  ) && ((ellipse_x_position + ellipse_radius) <= (rect_x_position + rect_length)))
+  (((ellipse_x_position + ellipse_radius) >= rect_x_position  ) 
+  &&
+  ((ellipse_x_position) <= (rect_x_position + rect_length)))
   && 
-  ((ellipse_y_position) == rect_y_position)){
+  ((ellipse_y_position) == rect_y_position)) 
+  {
   return true;
   }
   else{
@@ -88,7 +97,7 @@ boolean collide_paddle(){
 boolean collide_right_wall(int x_pos, int object_length){
   
   // right wall collision
-  if(x_pos >= (width - object_length)){
+  if(x_pos >= (width - object_length )){
     return true;
   }
   else{
@@ -97,10 +106,10 @@ boolean collide_right_wall(int x_pos, int object_length){
 }
 
 /**Checks if ball has collided with the Left wall*/
-boolean collide_left_wall(int x_pos, int object_length){
+boolean collide_left_wall(int x_pos){
   
   // Left wall collision
-  if(x_pos <= (0 + object_length)){
+  if(x_pos <=  0){
     return true;
   }
   else{
@@ -112,7 +121,7 @@ boolean collide_left_wall(int x_pos, int object_length){
 boolean collide_top(int y_pos, int object_height){
   
   // Top collision
-  if(y_pos <= (0 + object_height)){
+  if(y_pos <= 0){
     return true;
   }
   else{
