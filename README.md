@@ -1,5 +1,5 @@
 # igniteCS-exercises
-My solutions to the Winter 2019 Schulich ignite CS exercises
+My solutions to the Winter 2018 Schulich ignite CS exercises
 
 # Requirements
 You will need to have processing downloaded [Website](https://processing.org/)
